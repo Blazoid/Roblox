@@ -538,4 +538,4 @@ function DrawingLib.new(drawingType)
 		})
 	end
 end
-return
+return DrawingLib
