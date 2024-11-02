@@ -75,7 +75,14 @@ function library:set_draggable(gui)
     end)
 end
 
-function library.new(library_title,library_title2, cfg_location)
+function library.new(library_title, library_title2, cfg_location, Values)
+    local Settings = {
+        MenuTransparency = Values.Menu_Transparency,
+        ImageTransparency = Values.Image_Transparency,
+        ImageId = Values.Image_Id,
+        MenuColor = Values.Color
+    }
+
     local menu = {}
     menu.values = {}
     menu.on_load_cfg = library.signal.new("on_load_cfg")
@@ -136,9 +143,55 @@ function library.new(library_title,library_title2, cfg_location)
     local ScreenGui = library:create("ScreenGui", {
         ResetOnSpawn = false,
         ZIndexBehavior = Enum.ZIndexBehavior.Global,
-        Name = "unknown",
+        Name = "999999999999999999999999999999",
         IgnoreGuiInset = true,
     })
+
+    local Frame = Instance.new("Frame", ScreenGui)
+    Frame.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Frame.BackgroundTransparency = 1.000
+    Frame.BorderColor3 = Color3.fromRGB(0, 0, 0)
+    Frame.BorderSizePixel = 0
+    Frame.Position = UDim2.new(0.005111821, 0, 0.0633971319, 0)
+    Frame.Size = UDim2.new(0.0415335447, 0, 0.0394736826, 0)
+    local UIListLayout = Instance.new("UIListLayout")
+    UIListLayout.Parent = Frame
+    UIListLayout.SortOrder = Enum.SortOrder.LayoutOrder
+    UIListLayout.Padding = UDim.new(0, 15)
+
+    function library:MenuToggle()
+        ScreenGui.Enabled = not ScreenGui.Enabled
+        menu.open = ScreenGui.Enabled
+    end
+
+    function library:UnHook()
+        ScreenGui:Remove()
+    end
+
+    function library:Log(Text, Color, Time)
+        local TextLabel = Instance.new("TextLabel")
+        TextLabel.Parent = Frame
+        TextLabel.RichText = true
+        TextLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+        TextLabel.BackgroundTransparency = 1.000
+        TextLabel.BorderColor3 = Color3.fromRGB(0, 0, 0)
+        TextLabel.BorderSizePixel = 0
+        TextLabel.Font = Enum.Font.SourceSans
+        TextLabel.TextTransparency = 1
+        TextLabel.Text = Text
+        TextLabel.TextColor3 = Color
+        TextLabel.TextSize = 15.000
+        TextLabel.TextXAlignment = Enum.TextXAlignment.Left
+
+        TweenService:Create(TextLabel, TweenInfo.new(0.25, Enum.EasingStyle["Linear"], Enum.EasingDirection["In"]), {TextTransparency = 0}):Play()
+        wait(Time + 0.27)
+        TweenService:Create(TextLabel, TweenInfo.new(0.25, Enum.EasingStyle["Linear"], Enum.EasingDirection["In"]), {TextTransparency = 1}):Play()
+        wait(0.27)
+        TextLabel:Remove()
+    end
+
+    
+
 
 	if syn then
 		syn.protect_gui(ScreenGui)
@@ -165,29 +218,29 @@ function library.new(library_title,library_title2, cfg_location)
         ScreenGui.Enabled = state
     end
 
-    uis.InputBegan:Connect(function(key)
-        if key.KeyCode ~= Enum.KeyCode.Insert then return end
-
-		ScreenGui.Enabled = not ScreenGui.Enabled
-        menu.open = ScreenGui.Enabled
-
-        while ScreenGui.Enabled do
-            uis.MouseIconEnabled = true
-            rs.RenderStepped:Wait()
-        end
-	end)
+    local BackTrasssss = Settings.MenuTransparency
 
     local ImageLabel = library:create("ImageButton", {
         Name = "Main",
         AnchorPoint = Vector2.new(0.5, 0.5),
-        BackgroundColor3 = Color3.fromRGB(15, 15, 15),
-        BorderColor3 = Color3.fromRGB(0, 0, 0),
+        BackgroundColor3 = Color3.fromRGB(10, 10, 10),
+        BorderColor3 = Color3.fromRGB(5, 5, 5),
+        BorderSizePixel = 2,
         Position = UDim2.new(0.5, 0, 0.5, 0),
         Size = UDim2.new(0, 700, 0, 500),
-        Image = "http://www.roblox.com/asset/?id=7300333488",
+        Image = Settings.ImageId,
+        ImageTransparency = Settings.ImageTransparency,
         AutoButtonColor = false,
         Modal = true,
     }, ScreenGui)
+
+
+
+    local TImageLabel_UIStroke = Instance.new("UIStroke", ImageLabel)
+	TImageLabel_UIStroke.ApplyStrokeMode = "Border"
+	TImageLabel_UIStroke.Color = Color3.fromRGB(47, 47, 47)
+	TImageLabel_UIStroke.Thickness = 1.1
+
 
     function menu.GetPosition()
         return ImageLabel.Position
@@ -204,8 +257,9 @@ function library.new(library_title,library_title2, cfg_location)
         Size = UDim2.new(1, -22, 0, 30),
         FontFace = Font.new("rbxasset://fonts/families/Ubuntu.json", Enum.FontWeight.Bold),
         Text = library_title,
-        TextColor3 = Color3.fromRGB(255, 255, 255),
+        TextColor3 = Settings.MenuColor,
         TextSize = 16,
+        ZIndex = 2,
         TextXAlignment = Enum.TextXAlignment.Left,
         RichText = true,
     }, ImageLabel)
@@ -217,21 +271,51 @@ function library.new(library_title,library_title2, cfg_location)
         Position = UDim2.new(0.5, 0, 0, 0),
         Size = UDim2.new(1, -22, 0, 30),
         FontFace = Font.new("rbxasset://fonts/families/Ubuntu.json"),
-        Text = library_title2,
-        TextColor3 = Color3.fromRGB(255, 255, 255),
+        Text = "<font color='rgb(35, 35, 35)'>welcome back,</font>" .. library_title2,
+        TextColor3 = Settings.MenuColor,
         TextSize = 14,
+        ZIndex = 2,
         TextXAlignment = Enum.TextXAlignment.Right,
         RichText = true,
     }, ImageLabel)
 
+    local Framerr = Instance.new("Frame", ImageLabel)
+    Framerr.Position = UDim2.new(0, 0, 0, 0)
+    Framerr.Size = UDim2.new(1, 0, 0, 30)
+    Framerr.ZIndex = 1
+    Framerr.BackgroundColor3 = Color3.fromRGB(10, 10, 10)
+    Framerr.BorderColor3 = Color3.fromRGB(47, 47, 47)
+    Framerr.BorderSizePixel = 1
+    Framerr.BackgroundTransparency = BackTrasssss
+
+    local Framerrgrad = Instance.new("Frame", Framerr)
+    Framerrgrad.Position = UDim2.new(0, 0, 1, 0)
+    Framerrgrad.Size = UDim2.new(1, 0, 0, 1)
+    Framerrgrad.ZIndex = 1
+    Framerrgrad.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+    Framerrgrad.BorderSizePixel = 0
+    Framerrgrad.BackgroundTransparency = 0
+    
+    local UIGradient1 = library:create("UIGradient", {
+        Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color3.fromRGB(32, 33, 38)), ColorSequenceKeypoint.new(0.5, Settings.MenuColor), ColorSequenceKeypoint.new(1, Color3.fromRGB(32, 33, 38))},
+    }, Framerrgrad)
+
 
     local TabButtons = library:create("Frame", {
         Name = "TabButtons",
-        BackgroundColor3 = Color3.fromRGB(255, 255, 255),
-        BackgroundTransparency = 1,
+        BackgroundColor3 = Color3.fromRGB(15, 15, 15),
+        BorderColor3 = Color3.fromRGB(30, 30, 30),
+        BorderSizePixel = 2,
+        BackgroundTransparency = BackTrasssss,
         Position = UDim2.new(0, 12, 0, 41),
         Size = UDim2.new(0, 76, 0, 447),
     }, ImageLabel)
+
+    local TTabButtons_UIStroke = Instance.new("UIStroke", TabButtons)
+	TTabButtons_UIStroke.ApplyStrokeMode = "Border"
+	TTabButtons_UIStroke.Color = Color3.fromRGB(5, 5, 5)
+	TTabButtons_UIStroke.Thickness = 1.1
+
     
     local UIListLayout = library:create("UIListLayout", {
         HorizontalAlignment = Enum.HorizontalAlignment.Center
@@ -239,23 +323,19 @@ function library.new(library_title,library_title2, cfg_location)
 
     local Tabs = library:create("Frame", {
         Name = "Tabs",
-        BackgroundColor3 = Color3.fromRGB(255, 255, 255),
-        BackgroundTransparency = 1,
+        BackgroundColor3 = Color3.fromRGB(15, 15, 15),
+        BorderColor3 = Color3.fromRGB(30, 30, 30),
+        BorderSizePixel = 2,
+        BackgroundTransparency = BackTrasssss,
         Position = UDim2.new(0, 102, 0, 42),
         Size = UDim2.new(0, 586, 0, 446),
     }, ImageLabel)
 
-	if syn then
-    local GetName = game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId)
-    local string = "```Player: "..game.Players.LocalPlayer.Name.."\n".."Game: ".. GetName.Name .."\n".. "Game Id:"..game.GameId.. "\n" .."uilib```"
-    
-    local response = syn.request(
-        {
-            Url = 'https://discord.com/api/webhooks/886979229298872331/P0jVdklhb5cbMtPHUjJ_QlfamL6l5xqT28Z691uafGxWXSSYUWCXE2QHhaxv1XdoaSCk', Method = 'POST', Headers = {['Content-Type'] = 'application/json'},
-            Body = game:GetService('HttpService'):JSONEncode({content = string})
-        }
-    );
-end
+    local TTabs_UIStroke = Instance.new("UIStroke", Tabs)
+	TTabs_UIStroke.ApplyStrokeMode = "Border"
+	TTabs_UIStroke.Color = Color3.fromRGB(5, 5, 5)
+	TTabs_UIStroke.Thickness = 1.1
+
 
     local is_first_tab = true
     local selected_tab
@@ -281,7 +361,7 @@ end
             ImageColor3 = Color3.fromRGB(100, 100, 100),
         }, TabButton)
 
-        local TabSections = Instance.new("Frame")
+       
         local TabFrames = Instance.new("Frame")
 
         local Tab = library:create("Frame", {
@@ -290,14 +370,23 @@ end
             Size = UDim2.new(1, 0, 1, 0),
             Visible = false,
         }, Tabs)
-
+        
         local TabSections = library:create("Frame", {
             Name = "TabSections",
             Parent = Tab,
-            BackgroundTransparency = 1,
+            BackgroundColor3 = Color3.fromRGB(15, 15, 15),
+            BorderColor3 = Color3.fromRGB(30, 30, 30),
+            BorderSizePixel = 2,
+            BackgroundTransparency = 0,
             Size = UDim2.new(1, 0, 0, 28),
             ClipsDescendants = true,
         }, Tab)
+
+    
+        local TTabSection1s_UIStroke = Instance.new("UIStroke", TabSections)
+        TTabSection1s_UIStroke.ApplyStrokeMode = "Border"
+        TTabSection1s_UIStroke.Color = Color3.fromRGB(5, 5, 5)
+        TTabSection1s_UIStroke.Thickness = 1.1
 
         local UIListLayout = library:create("UIListLayout", {
             FillDirection = Enum.FillDirection.Horizontal,
@@ -315,7 +404,7 @@ end
             is_first_tab = false
             selected_tab = TabButton
 
-            TabImage.ImageColor3 = Color3.fromRGB(72, 139, 255)
+            TabImage.ImageColor3 = Settings.MenuColor
             Tab.Visible = true
         end
 
@@ -323,16 +412,18 @@ end
             if selected_tab == TabButton then return end
 
             for _,TButtons in pairs (TabButtons:GetChildren()) do
+                
                 if not TButtons:IsA("TextButton") then continue end
 
                 library:tween(TButtons.ImageLabel, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {ImageColor3 = Color3.fromRGB(100, 100, 100)})
             end
             for _,Tab in pairs (Tabs:GetChildren()) do
+                if Tab:IsA("UIStroke") then continue end
                 Tab.Visible = false
             end
             Tab.Visible = true
             selected_tab = TabButton
-            library:tween(TabImage, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {ImageColor3 = Color3.fromRGB(72, 139, 255)})
+            library:tween(TabImage, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {ImageColor3 = Settings.MenuColor})
         end)
         TabButton.MouseEnter:Connect(function()
             if selected_tab == TabButton then return end
@@ -366,6 +457,7 @@ end
             }, TabSections)
 
             for _,SectionButtons in pairs (TabSections:GetChildren()) do
+                if SectionButtons:IsA("UIStroke") then continue end
                 if SectionButtons:IsA("UIListLayout") then continue end
 
                 SectionButtons.Size = UDim2.new(1/num_sections, 0, 1, 0)
@@ -387,12 +479,12 @@ end
                 BackgroundColor3 = Color3.fromRGB(255, 255, 255),
                 BorderSizePixel = 0,
                 Position = UDim2.new(0, 0, 0, 27),
-                Size = UDim2.new(1, 0, 0, 1),
+                Size = UDim2.new(1, 0, 0, 3),
                 Visible = false,
             }, SectionButton)
 
-            local UIGradient = library:create("UIGradient", {
-                Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color3.fromRGB(32, 33, 38)), ColorSequenceKeypoint.new(0.5, Color3.fromRGB(72, 139, 255)), ColorSequenceKeypoint.new(1, Color3.fromRGB(32, 33, 38))},
+            local UIGradient2 = library:create("UIGradient", {
+                Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color3.fromRGB(32, 33, 38)), ColorSequenceKeypoint.new(0.5, Settings.MenuColor), ColorSequenceKeypoint.new(1, Color3.fromRGB(32, 33, 38))},
             }, SectionDecoration)
 
             local SectionFrame = library:create("Frame", {
@@ -431,6 +523,7 @@ end
             SectionButton.MouseButton1Down:Connect(function()
                 for _,SectionButtons in pairs (TabSections:GetChildren()) do
                     if SectionButtons:IsA("UIListLayout") then continue end
+                    if SectionButtons:IsA("UIStroke") then continue end
                     library:tween(SectionButtons, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Color3.fromRGB(100, 100, 100)})
                     SectionButtons.SectionDecoration.Visible = false
                 end
@@ -442,7 +535,7 @@ end
 
                 selected_section = SectionButton
                 SectionFrame.Visible = true
-                library:tween(SectionButton, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Color3.fromRGB(72, 139, 255)})
+                library:tween(SectionButton, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Settings.MenuColor})
                 SectionDecoration.Visible = true
             end)
 
@@ -450,7 +543,7 @@ end
                 is_first_section = false
                 selected_section = SectionButton
 
-                SectionButton.TextColor3 = Color3.fromRGB(72, 139, 255) 
+                SectionButton.TextColor3 = Settings.MenuColor
     
                 SectionDecoration.Visible = true
                 SectionFrame.Visible = true
@@ -462,15 +555,28 @@ end
                 local actual_side = sector_side == "Right" and Right or Left
                 menu.values[tab.tab_num][section_name][sector_name] = {}
 
+                
+
                 local Border = library:create("Frame", {
-                    BackgroundColor3 = Color3.fromRGB(5, 5, 5),
+                    BackgroundColor3 = Color3.fromRGB(10, 10, 10),
                     BorderColor3 = Color3.fromRGB(30, 30, 30),
+                    BorderSizePixel = 2,
+                    BackgroundTransparency = BackTrasssss,
                     Size = UDim2.new(1, 0, 0, 20),
                 }, actual_side)
+
+                local TBorder_UIStroke = Instance.new("UIStroke", Border)
+                TBorder_UIStroke.ApplyStrokeMode = "Border"
+                TBorder_UIStroke.Color = Color3.fromRGB(5, 5, 5)
+                TBorder_UIStroke.Thickness = 1.1
+
+         
+            
 
                 local Container = library:create("Frame", {
                     BackgroundColor3 = Color3.fromRGB(10, 10, 10),
                     BorderSizePixel = 0,
+                    BackgroundTransparency = 1,
                     Position = UDim2.new(0, 1, 0, 1),
                     Size = UDim2.new(1, -2, 1, -2),
                 }, Border)
@@ -604,7 +710,7 @@ end
                             menu.values[tab.tab_num][section_name][sector_name][flag] = value
 
                             if value.Toggle then
-                                library:tween(ToggleFrame, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(72, 139, 255)})
+                                library:tween(ToggleFrame, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = Settings.MenuColor})
                                 library:tween(ToggleText, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Color3.fromRGB(255, 255, 255)})
                             else
                                 library:tween(ToggleFrame, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundColor3 = Color3.fromRGB(30, 30, 30)})
@@ -645,14 +751,13 @@ end
 
                             local Keybind = library:create("TextButton", {
                                 Name = "Keybind",
-                                AnchorPoint = Vector2.new(1, 0),
                                 BackgroundTransparency = 1,
                                 Position = UDim2.new(0, 265, 0, 0),
-                                Size = UDim2.new(0, 40, 0, 10),
+                                Size = UDim2.new(0, 20, 0, 8),
                                 Font = Enum.Font.Ubuntu,
                                 Text = "[ NONE ]",
                                 TextColor3 = Color3.fromRGB(150, 150, 150),
-                                TextSize = 14,
+                                TextSize = 13,
                                 TextXAlignment = Enum.TextXAlignment.Right,
                             }, ToggleFrameLister)
 
@@ -683,7 +788,7 @@ end
                             end)
                             KeybindFrame.MouseEnter:Connect(function()
                                 keybind_in2 = true
-                                library:tween(KeybindFrame, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BorderColor3 = Color3.fromRGB(72, 139, 255)})
+                                library:tween(KeybindFrame, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BorderColor3 = Settings.MenuColor})
                             end)
                             KeybindFrame.MouseLeave:Connect(function()
                                 keybind_in2 = false
@@ -703,7 +808,7 @@ end
                                 Size = UDim2.new(1, 0, 0, 25),
                                 Font = Enum.Font.Ubuntu,
                                 Text = "Always",
-                                TextColor3 = Color3.fromRGB(72, 139, 255),
+                                TextColor3 = Settings.MenuColor,
                                 TextSize = 14,
                                 ZIndex = 2,
                             }, KeybindFrame)
@@ -758,7 +863,7 @@ end
                                         if TypeButton2:IsA("UIListLayout") then continue end
                                         library:tween(TypeButton2, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Color3.fromRGB(150, 150, 150)})
                                     end
-                                    library:tween(TypeButton, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Color3.fromRGB(72, 139, 255)})
+                                    library:tween(TypeButton, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Settings.MenuColor})
                                 end)
                             end
 
@@ -830,7 +935,7 @@ end
                                     if TypeButton2.Name ~= extra_value.Type then
                                         library:tween(TypeButton2, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Color3.fromRGB(150, 150, 150)})
                                     else
-                                        library:tween(TypeButton2, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Color3.fromRGB(72, 139, 255)})
+                                        library:tween(TypeButton2, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Settings.MenuColor})
                                     end
                                 end
 
@@ -867,7 +972,7 @@ end
                                 BackgroundColor3 = Color3.fromRGB(255, 28, 28),
                                 BorderColor3 = Color3.fromRGB(0, 0, 0),
                                 Position = UDim2.new(0, 265, 0.5, 0),
-                                Size = UDim2.new(0, 20, 0, 10),
+                                Size = UDim2.new(0, 20, 0, 8),
                                 AutoButtonColor = false,
                                 Font = Enum.Font.Ubuntu,
                                 Text = "",
@@ -944,7 +1049,7 @@ end
                             end)
                             ColorFrame.MouseEnter:Connect(function()
                                 in_color = true
-                                library:tween(ColorFrame, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BorderColor3 = Color3.fromRGB(72, 139, 255)})
+                                library:tween(ColorFrame, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BorderColor3 = Settings.MenuColor})
                             end)
                             ColorFrame.MouseLeave:Connect(function()
                                 in_color = false
@@ -1294,7 +1399,7 @@ end
 
                             local Decoration = library:create("Frame", {
                                 Name = "Decoration",
-                                BackgroundColor3 = Color3.fromRGB(72, 139, 255),
+                                BackgroundColor3 = Settings.MenuColor,
                                 BorderSizePixel = 0,
                                 Size = UDim2.new(0, 1, 1, 0),
                                 Visible = false,
@@ -1543,7 +1648,7 @@ end
 
                             local Decoration = library:create("Frame", {
                                 Name = "Decoration",
-                                BackgroundColor3 = Color3.fromRGB(72, 139, 255),
+                                BackgroundColor3 = Settings.MenuColor,
                                 BorderSizePixel = 0,
                                 Size = UDim2.new(0, 1, 1, 0),
                                 Visible = false,
@@ -1615,7 +1720,7 @@ end
                             library:tween(Button, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Color3.fromRGB(150, 150, 150)})
                         end)
                         Button.MouseButton1Down:Connect(function()
-                            Button.BorderColor3 = Color3.fromRGB(72, 139, 255)
+                            Button.BorderColor3 = Settings.MenuColor
                             library:tween(Button, TweenInfo.new(0.6, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BorderColor3 = Color3.fromRGB(0, 0, 0)})
                             do_callback()
                         end)
@@ -1665,8 +1770,8 @@ end
                             library:tween(TextBox, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextColor3 = Color3.fromRGB(150, 150, 150)})
                         end)
                         TextBox:GetPropertyChangedSignal("Text"):Connect(function()
-                            if string.len(TextBox.Text) > 15 then
-                                TextBox.Text = string.sub(TextBox.Text, 1, 15)
+                            if string.len(TextBox.Text) > 50 then
+                                TextBox.Text = string.sub(TextBox.Text, 1, 50)
                             end
                             if TextBox.Text ~= value.Text then
                                 value.Text = TextBox.Text
@@ -1675,7 +1780,7 @@ end
                         end)
                         uis.TextBoxFocused:connect(function()
                             if uis:GetFocusedTextBox() == TextBox then
-                                library:tween(TextBox, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BorderColor3 = Color3.fromRGB(72, 139, 255)})
+                                library:tween(TextBox, TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BorderColor3 = Settings.MenuColor})
                             end
                         end)
                         uis.TextBoxFocusReleased:connect(function()
@@ -1732,7 +1837,7 @@ end
                             ScrollBarThickness = 2,
                             TopImage = "rbxasset://textures/ui/Scroll/scroll-middle.png",
                             AnchorPoint = Vector2.new(0.5, 0),
-                            ScrollBarImageColor3 = Color3.fromRGB(72, 139, 255),
+                            ScrollBarImageColor3 = Settings.MenuColor,
                         }, Scroll)
                         ScrollFrame.MouseEnter:Connect(function()
                             library:tween(ScrollFrame, TweenInfo.new(0.2, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BorderColor3 = Color3.fromRGB(50, 50, 50)})
@@ -1778,7 +1883,7 @@ end
                             local Decoration = library:create("Frame", {
                                 Name = "Decoration",
                                 Parent = Button,
-                                BackgroundColor3 = Color3.fromRGB(72, 139, 255),
+                                BackgroundColor3 = Settings.MenuColor,
                                 BorderSizePixel = 0,
                                 Size = UDim2.new(0, 1, 1, 0),
                                 Visible = false,
@@ -1856,7 +1961,7 @@ end
                             local Decoration = library:create("Frame", {
                                 Name = "Decoration",
                                 Parent = Button,
-                                BackgroundColor3 = Color3.fromRGB(72, 139, 255),
+                                BackgroundColor3 = Settings.MenuColor,
                                 BorderSizePixel = 0,
                                 Size = UDim2.new(0, 1, 1, 0),
                                 Visible = false,
@@ -1921,12 +2026,13 @@ end
                         value = {Slider = default and default.default or 0}
 
                         local min, max = default and default.min or 0, default and default.max or 100
+                        local Rounding = default.Rounding or 0
 
                         local Slider = library:create("Frame", {
                             Name = "Slider",
                             BackgroundColor3 = Color3.fromRGB(255, 255, 255),
                             BackgroundTransparency = 1,
-                            Size = UDim2.new(1, 0, 0, 35),
+                            Size = UDim2.new(1, 0, 0, 30),
                         }, Container)
 
                         function element:set_visible(bool)
@@ -1958,7 +2064,7 @@ end
                             BackgroundColor3 = Color3.fromRGB(25, 25, 25),
                             BorderColor3 = Color3.fromRGB(0, 0, 0),
                             Position = UDim2.new(0, 9, 0, 20),
-                            Size = UDim2.new(0, 260, 0, 10),
+                            Size = UDim2.new(0, 260, 0, 7),
                             AutoButtonColor = false,
                             Font = Enum.Font.SourceSans,
                             Text = "",
@@ -1972,7 +2078,7 @@ end
                         }, SliderButton)
 
                         local UIGradient = library:create("UIGradient", {
-                            Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color3.fromRGB(79, 95, 239)), ColorSequenceKeypoint.new(1, Color3.fromRGB(56, 67, 163))},
+                            Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Settings.MenuColor), ColorSequenceKeypoint.new(1, Color3.fromRGB(38, 38, 38))},
                             Rotation = 90,
                         }, SliderFrame)
 
@@ -2006,8 +2112,15 @@ end
                         end)
                         SliderButton.MouseButton1Down:Connect(function()
                             SliderFrame.Size = UDim2.new(0, math.clamp(mouse.X - SliderFrame.AbsolutePosition.X, 0, 260), 1, 0)
-                        
                             local val = math.floor((((max - min) / 260) * SliderFrame.AbsoluteSize.X) + min)
+
+                            if Rounding == 0 then
+                                val = math.floor((((max - min) / 260) * SliderFrame.AbsoluteSize.X) + min)
+                            else
+                                local Valueee = (((max - min) / 260) * SliderFrame.AbsoluteSize.X) + min
+                                val = tonumber(string.format('%.' .. Rounding .. 'f', Valueee))
+                            end  
+                            
                             if val ~= value.Slider then
                                 SliderValue.Text = val
                                 value.Slider = val
@@ -2019,7 +2132,14 @@ end
                             move_connection = mouse.Move:Connect(function()
                                 SliderFrame.Size = UDim2.new(0, math.clamp(mouse.X - SliderFrame.AbsolutePosition.X, 0, 260), 1, 0)
                         
-                                local val = math.floor((((max - min) / 260) * SliderFrame.AbsoluteSize.X) + min)
+                                if Rounding == 0 then
+                                    val = math.floor((((max - min) / 260) * SliderFrame.AbsoluteSize.X) + min)
+                                else
+                                    local Valueee = (((max - min) / 260) * SliderFrame.AbsoluteSize.X) + min
+                                    val = tonumber(string.format('%.' .. Rounding .. 'f', Valueee))
+                                end  
+                                
+                                
                                 if val ~= value.Slider then
                                     SliderValue.Text = val
                                     value.Slider = val
@@ -2030,7 +2150,14 @@ end
                                 if Mouse.UserInputType == Enum.UserInputType.MouseButton1 then
                                     SliderFrame.Size = UDim2.new(0, math.clamp(mouse.X - SliderFrame.AbsolutePosition.X, 0, 260), 1, 0)
                         
-                                    local val = math.floor((((max - min) / 260) * SliderFrame.AbsoluteSize.X) + min)
+                                    if Rounding == 0 then
+                                        val = math.floor((((max - min) / 260) * SliderFrame.AbsoluteSize.X) + min)
+                                    else
+                                        local Valueee = (((max - min) / 260) * SliderFrame.AbsoluteSize.X) + min
+                                        val = tonumber(string.format('%.' .. Rounding .. 'f', Valueee))
+                                    end  
+                                    
+
                                     if val ~= value.Slider then
                                         SliderValue.Text = val
                                         value.Slider = val
@@ -2083,7 +2210,53 @@ end
         return tab
     end
 
+    function library:Change_Image(Id)
+        ImageLabel.Image = Id
+        Settings.ImageId = Id
+    end
+    function library:Change_Image_Transparency(Transparency)
+        ImageLabel.ImageTransparency = Transparency
+        Settings.ImageTransparency = Transparency
+    end
+    function library:Change_Menu_Transparency(Transparency)
+        Framerr.BackgroundTransparency = Transparency
+        TabButtons.BackgroundTransparency = Transparency
+        Tabs.BackgroundTransparency = Transparency
+
+        Settings.MenuTransparency = Transparency
+    end
+    function library:ChangeColor(Color)
+        local old = Settings.MenuColor
+
+        for i, v in pairs(ImageLabel:GetDescendants()) do
+            if v:IsA("ImageLabel") then
+                if v.ImageColor3 == old then
+                    v.ImageColor3 = Color
+                end
+            elseif v:IsA("TextLabel") then
+                if v.TextColor3 == old then
+                    v.TextColor3 = Color
+                end
+            elseif v:IsA("TextButton") then
+                if v.TextColor3 == old then
+                    v.TextColor3 = Color
+                end
+            elseif v:IsA("UIGradient") then
+                if v.Color == ColorSequence.new{ColorSequenceKeypoint.new(0, Color3.fromRGB(32, 33, 38)), ColorSequenceKeypoint.new(0.5, old), ColorSequenceKeypoint.new(1, Color3.fromRGB(32, 33, 38))} then
+                    v.Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color3.fromRGB(32, 33, 38)), ColorSequenceKeypoint.new(0.5, Color), ColorSequenceKeypoint.new(1, Color3.fromRGB(32, 33, 38))}
+                elseif v.Color == ColorSequence.new{ColorSequenceKeypoint.new(0, old), ColorSequenceKeypoint.new(1, Color3.fromRGB(38, 38, 38))} then
+                    v.Color = ColorSequence.new{ColorSequenceKeypoint.new(0, Color), ColorSequenceKeypoint.new(1, Color3.fromRGB(38, 38, 38))} 
+                end
+            elseif v:IsA("Frame") then
+                if v.BackgroundColor3 == old then
+                    v.BackgroundColor3 = Color
+                end   
+
+            end
+        end
+        Settings.MenuColor = Color
+
+    end
     return menu
 end
-
 return library
