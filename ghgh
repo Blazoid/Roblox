@@ -1381,6 +1381,7 @@ function Funcs:AddLabel(Text, DoesWrap)
             Size = UDim2.new(1, -4, 0, 15);
             TextSize = 14;
             Text = Text;
+            RichText = true;
             TextWrapped = DoesWrap or false,
             TextXAlignment = Enum.TextXAlignment.Left;
             ZIndex = 5;
