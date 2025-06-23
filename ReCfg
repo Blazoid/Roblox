@@ -248,6 +248,7 @@ local SaveManager = {} do
 			Options.SaveManager_ConfigList:SetValues(self:RefreshConfigList())
 			Options.SaveManager_ConfigList:SetValue(nil)
 		end)
+		SaveManager.AutoloadLabel = section:AddLabel('Current autoload config: none', true)
 		section:AddButton('Set as autoload', function()
 			local name = Options.SaveManager_ConfigList.Value
 			writefile(self.Folder .. '/settings/autoload.txt', name)
