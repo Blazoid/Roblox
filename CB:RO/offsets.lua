@@ -645,3 +645,4 @@ local offsets = {
                 {'Fingerless Glove_Scapter'},                
                 {'Fingerless Glove_Crystal'},
 }
+return offsets
