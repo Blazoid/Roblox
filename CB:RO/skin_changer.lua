@@ -1,7 +1,7 @@
 local players = game:GetService("Players")
 local local_player = players.LocalPlayer
 local Client = getsenv(local_player.PlayerGui.Client)
-local offsets = loadstring(game:HttpGet('https://raw.githubusercontent.com/Blazoid/Roblox/refs/heads/main/CB%3ARO/offsets'))()
+local offsets = loadstring(game:HttpGet('https://raw.githubusercontent.com/Blazoid/Roblox/refs/heads/main/CB%3ARO/offsets.lua'))()
 local isUnlocked
 local mt = getrawmetatable(game)
 local oldNamecall = mt.__namecall
