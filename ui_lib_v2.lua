@@ -1,4 +1,4 @@
-local ServiceNames, services = {"UserInputService", "HttpService", "Lighting", "Teams", "GuiService", "RunService", "Stats", "ReplicatedStorage", "CoreGui", "TweenService", "Players", "Workspace"},{}
+local ServiceNames, services = {"UserInputService", "HttpService", "TextService", "Lighting", "Teams", "GuiService", "RunService", "Stats", "ReplicatedStorage", "CoreGui", "TweenService", "Players", "Workspace"},{}
 for _,Service in ServiceNames do services[Service] = cloneref(game:GetService(Service)) end 
 
 local RenderStepped = services.RunService.RenderStepped;
