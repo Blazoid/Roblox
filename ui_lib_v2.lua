@@ -397,6 +397,7 @@ do
             Value = Info.Default;
             Transparency = Info.Transparency or 0;
             Type = 'ColorPicker';
+            Transparency_Type = Info.Transparency_Type or "Default";
             Title = type(Info.Title) == 'string' and Info.Title or 'Color picker',
             Callback = Info.Callback or function(Color) end;
         };
@@ -792,7 +793,13 @@ do
 
             if TransparencyBoxInner then
                 TransparencyBoxInner.BackgroundColor3 = ColorPicker.Value;
-                TransparencyCursor.Position = UDim2.new(1 - ColorPicker.Transparency, 0, 0, 0);
+
+                if ColorPicker.Transparency_Type == "Default" then
+                    TransparencyCursor.Position = UDim2.new(1 - ColorPicker.Transparency, 0, 0, 0);
+                else
+                    TransparencyCursor.Position = UDim2.new(-1 - ColorPicker.Transparency, 0, 0, 0);
+                end
+                
             end;
 
             CursorOuter.Position = UDim2.new(ColorPicker.Sat, 0, 1 - ColorPicker.Vib, 0);
@@ -902,7 +909,11 @@ do
                         local MaxX = MinX + TransparencyBoxInner.AbsoluteSize.X;
                         local MouseX = math.clamp(Mouse.X, MinX, MaxX);
 
-                        ColorPicker.Transparency = 1 - ((MouseX - MinX) / (MaxX - MinX));
+                        if ColorPicker.Transparency_Type == "Default" then
+                            ColorPicker.Transparency = 1 - ((MouseX - MinX) / (MaxX - MinX));
+                        else
+                            ColorPicker.Transparency = -1 - ((MouseX - MinX) / (MaxX - MinX));
+                        end
 
                         ColorPicker:Display();
 
