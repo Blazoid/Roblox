@@ -2968,13 +2968,13 @@ function Library:CreateWindow(...)
             if obj:IsA("TextLabel") or obj:IsA("TextButton") or obj:IsA("TextBox") then
 
                 if state == "Graph35" then
-                    obj.FontFace, obj.TextSize = custom_fonts["Graph_35"], 6
+                    obj.FontFace, obj.TextSize = custom_fonts["Graph35"], 6
                 elseif state == "Minecraftia" then
                         obj.FontFace, obj.TextSize = custom_fonts['Minecraftia'], 11 
                 elseif state == "ProggyCleanTT" then
                     obj.FontFace, obj.TextSize = custom_fonts['ProggyCleanTT'], 11 
                 elseif state == "SmallestPixel" then 
-                    obj.FontFace, obj.TextSize = custom_fonts['Smallest_Pixel'], 9 
+                    obj.FontFace, obj.TextSize = custom_fonts['SmallestPixel'], 9 
                 elseif state == "Templeos" then
                     obj.FontFace, obj.TextSize = custom_fonts['Templeos'], 6 
                 elseif state == "ProggyTiny" then
