@@ -9,7 +9,7 @@ getgenv().Flags.Fonts = {
 getgenv().Flags.Trash = {}
 
 do
-    function Trash:Register_Font(Name, Weight, Style, Asset)
+    function Flags.Trash:Register_Font(Name, Weight, Style, Asset)
         if not isfolder('Fonts') then
             makefolder('Fonts')
         end
@@ -21,7 +21,7 @@ do
         writefile(font,game:GetService('HttpService'):JSONEncode({name = Name,faces = {{name = 'Regular',weight = Weight,style = Style,assetId = getcustomasset(asset),},},}))
         return getcustomasset(font)
     end
-    Fonts = {
+    Flags.Fonts = {
         Graph_35 = Font.new(Trash:Register_Font('Graph_35', 400, 'Regular', {Id = 'Graph_35.ttf',Font = crypt.base64.decode(game:HttpGet('https://raw.github.com/Blazoid/Trash/main/Graph_35')),})),
         Minecraftia = Font.new(Trash:Register_Font('Minecraftia', 400, 'Regular', {Id = 'Minecraftia.ttf',Font = crypt.base64.decode(game:HttpGet('https://raw.github.com/Blazoid/Trash/main/Minecraftia')),})),
         ProggyCleanTT = Font.new(Trash:Register_Font('ProggyCleanTT', 400, 'Regular', {Id = 'ProggyCleanTT.ttf',Font = crypt.base64.decode(game:HttpGet('https://raw.github.com/Blazoid/Trash/main/ProggyCleanTT')),})),
