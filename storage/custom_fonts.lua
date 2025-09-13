@@ -1,7 +1,7 @@
 --// Example: TextLabel.FontFace = custom_fonts[font name]
 if not getgenv().custom_fonts then getgenv().custom_fonts = {} end
 getgenv().custom_fonts = {
-    Graph-35 = {},
+    Graph35 = {},
     Minecraftia = {},
     ProggyCleanTT = {},
     SmallestPixel = {},
