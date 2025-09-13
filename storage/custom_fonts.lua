@@ -1,4 +1,4 @@
-Fonts = {
+getgenv().Flags.Fonts = {
     Graph_35 = {},
     Minecraftia = {},
     ProggyCleanTT = {},
@@ -6,7 +6,7 @@ Fonts = {
     Templeos = {},
     ProggyTiny = {},
 }
-Trash = {}
+getgenv().Flags.Trash = {}
 
 do
     function Trash:Register_Font(Name, Weight, Style, Asset)
@@ -30,5 +30,3 @@ do
         ProggyTiny = Font.new(Trash:Register_Font('ProggyTiny', 400, 'Regular', {Id = 'ProggyTiny.ttf',Font = crypt.base64.decode(game:HttpGet('https://raw.github.com/Blazoid/Trash/main/ProggyTiny')),})),
     }
 end
-
-return Fonts
