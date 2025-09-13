@@ -1,9 +1,9 @@
 if not getgenv().custom_fonts then getgenv().custom_fonts = {} end
 getgenv().custom_fonts = {
-    Graph_35 = {},
+    Graph35 = {},
     Minecraftia = {},
     ProggyCleanTT = {},
-    Smallest_Pixel = {},
+    SmallestPixel = {},
     Templeos = {},
     ProggyTiny = {},
 	Trash_Bag = {}
@@ -18,10 +18,10 @@ do
         return getcustomasset(font)
     end
     custom_fonts = {
-        Graph_35 = Font.new(custom_fonts.Trash_Bag:Register_Font('Graph_35', 400, 'Regular', {Id = 'Graph_35.ttf',Font = crypt.base64.decode(game:HttpGet('https://raw.github.com/Blazoid/Trash/main/Graph_35'))})),
+        Graph35 = Font.new(custom_fonts.Trash_Bag:Register_Font('Graph35', 400, 'Regular', {Id = 'Graph35.ttf',Font = crypt.base64.decode(game:HttpGet('https://raw.github.com/Blazoid/Trash/main/Graph_35'))})),
         Minecraftia = Font.new(custom_fonts.Trash_Bag:Register_Font('Minecraftia', 400, 'Regular', {Id = 'Minecraftia.ttf',Font = crypt.base64.decode(game:HttpGet('https://raw.github.com/Blazoid/Trash/main/Minecraftia'))})),
         ProggyCleanTT = Font.new(custom_fonts.Trash_Bag:Register_Font('ProggyCleanTT', 400, 'Regular', {Id = 'ProggyCleanTT.ttf',Font = crypt.base64.decode(game:HttpGet('https://raw.github.com/Blazoid/Trash/main/ProggyCleanTT'))})),
-        Smallest_Pixel = Font.new(custom_fonts.Trash_Bag:Register_Font('Smallest_Pixel', 400, 'Regular', {Id = 'Smallest_Pixel.ttf',Font = crypt.base64.decode(game:HttpGet('https://raw.github.com/Blazoid/Trash/main/Smallest_Pixel'))})),
+        SmallestPixel = Font.new(custom_fonts.Trash_Bag:Register_Font('SmallestPixel', 400, 'Regular', {Id = 'SmallestPixel.ttf',Font = crypt.base64.decode(game:HttpGet('https://raw.github.com/Blazoid/Trash/main/Smallest_Pixel'))})),
         Templeos = Font.new(custom_fonts.Trash_Bag:Register_Font('Templeos', 400, 'Regular', {Id = 'Templeos.ttf',Font = crypt.base64.decode(game:HttpGet('https://raw.github.com/Blazoid/Trash/main/Templeos'))})),
         ProggyTiny = Font.new(custom_fonts.Trash_Bag:Register_Font('ProggyTiny', 400, 'Regular', {Id = 'ProggyTiny.ttf',Font = crypt.base64.decode(game:HttpGet('https://raw.github.com/Blazoid/Trash/main/ProggyTiny'))})),
     }
@@ -2967,13 +2967,13 @@ function Library:CreateWindow(...)
         for _, obj in ipairs(ScreenGui:GetDescendants()) do
             if obj:IsA("TextLabel") or obj:IsA("TextButton") or obj:IsA("TextBox") then
 
-                if state == "Graph-35" then
+                if state == "Graph35" then
                     obj.FontFace, obj.TextSize = custom_fonts["Graph_35"], 6
                 elseif state == "Minecraftia" then
                         obj.FontFace, obj.TextSize = custom_fonts['Minecraftia'], 11 
                 elseif state == "ProggyCleanTT" then
                     obj.FontFace, obj.TextSize = custom_fonts['ProggyCleanTT'], 11 
-                elseif state == "Smallest-Pixel" then 
+                elseif state == "SmallestPixel" then 
                     obj.FontFace, obj.TextSize = custom_fonts['Smallest_Pixel'], 9 
                 elseif state == "Templeos" then
                     obj.FontFace, obj.TextSize = custom_fonts['Templeos'], 6 
