@@ -1,5 +1,5 @@
-local ServiceNames, services = {"UserInputService", "HttpService", "TextService", "Lighting", "Teams", "GuiService", "RunService", "Stats", "ReplicatedStorage", "CoreGui", "TweenService", "Players", "Workspace"},{}
-for _,Service in ServiceNames do services[Service] = cloneref(game:GetService(Service)) end 
+local services = loadstring(game:HttpGet('https://raw.github.com/Blazoid/Roblox/main/storage/services.lua'))()
+local custom_fonts = loadstring(game:HttpGet('https://raw.github.com/Blazoid/Roblox/main/storage/custom_fonts.lua'))()
 
 local RenderStepped = services.RunService.RenderStepped;
 local LocalPlayer = services.Players.LocalPlayer;
@@ -34,9 +34,8 @@ local Library = {
     Signals = {};
     Select_Part = nil;
     ScreenGui = ScreenGui;
-    Fonts = { Graph_35 = {}, Minecraftia = {},ProggyCleanTT = {},Smallest_Pixel = {}, Templeos = {}, ProggyTiny = {} };
-    Trash = {};
 };
+
 
 do 
     function Library.Trash:Register_Font(Name, Weight, Style, Asset)
