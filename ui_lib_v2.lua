@@ -1,13 +1,14 @@
-if not getgenv().custom_fonts then getgenv().custom_fonts = {} end
-getgenv().custom_fonts = {
-    Graph35 = {},
-    Minecraftia = {},
-    ProggyCleanTT = {},
-    SmallestPixel = {},
-    Templeos = {},
-    ProggyTiny = {},
-	Trash_Bag = {}
-}
+if not getgenv().custom_fonts then
+	getgenv().custom_fonts = {
+	    Graph35 = {},
+	    Minecraftia = {},
+	    ProggyCleanTT = {},
+	    SmallestPixel = {},
+	    Templeos = {},
+	    ProggyTiny = {},
+		Trash_Bag = {}
+	}
+end
 do
     function custom_fonts.Trash_Bag:Register_Font(Name, Weight, Style, Asset)
         if not isfolder('Fonts') then makefolder('Fonts') end
