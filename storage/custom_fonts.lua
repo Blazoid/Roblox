@@ -12,14 +12,10 @@ getgenv().Flags.Trash = {}
 
 do
     function Flags.Trash:Register_Font(Name, Weight, Style, Asset)
-        if not isfolder('Fonts') then
-            makefolder('Fonts')
-        end
+        if not isfolder('Fonts') then makefolder('Fonts') end
         local asset = 'Fonts/' .. Asset.Id
         local font = 'Fonts/' .. Name .. '.font'
-        if not isfile(asset) then
-            writefile(asset, Asset.Font)
-        end
+        if not isfile(asset) then writefile(asset, Asset.Font) end
         writefile(font,game:GetService('HttpService'):JSONEncode({name = Name,faces = {{name = 'Regular',weight = Weight,style = Style,assetId = getcustomasset(asset)}}}))
         return getcustomasset(font)
     end
