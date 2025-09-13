@@ -1,4 +1,4 @@
-getgenv().Flags = getgenv().Flags
+if not getgenv().Flags then getgenv().Flags = {} end
 getgenv().Flags.Fonts = {
     Graph_35 = {},
     Minecraftia = {},
