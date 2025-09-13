@@ -1,3 +1,4 @@
+getgenv().Flags = getgenv().Flags
 getgenv().Flags.Fonts = {
     Graph_35 = {},
     Minecraftia = {},
