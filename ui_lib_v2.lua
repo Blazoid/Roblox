@@ -552,7 +552,6 @@ do
             BackgroundTransparency = 1;
             Position = UDim2.new(0, 5, 0, 0);
             Size = UDim2.new(1, -5, 1, 0);
-            Font = custom_fonts;
             PlaceholderColor3 = Color3.fromRGB(190, 190, 190);
             PlaceholderText = 'Hex color',
             Text = '#FFFFFF',
@@ -1739,8 +1738,6 @@ function Funcs:AddLabel(Text, DoesWrap)
 
             Position = UDim2.fromOffset(0, 0),
             Size = UDim2.fromScale(5, 1),
-
-            Font = custom_fonts;
             PlaceholderColor3 = Color3.fromRGB(190, 190, 190);
             PlaceholderText = Info.Placeholder or '';
 
