@@ -1,3 +1,4 @@
+--// Example: TextLabel.FontFace = Flags.Fonts[font name]
 if not getgenv().Flags then getgenv().Flags = {} end
 getgenv().Flags.Fonts = {
     Graph_35 = {},
