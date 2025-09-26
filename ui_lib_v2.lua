@@ -2672,7 +2672,7 @@ function Funcs:AddLabel(Text, DoesWrap)
 
         setmetatable(Depbox, BaseGroupbox);
 
-        table.insert(Library.DependencyBoxes[name], Depbox);
+        Library.DependencyBoxes[name] = Depbox;
 
         return Depbox;
     end;
