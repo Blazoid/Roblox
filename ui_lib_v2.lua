@@ -2600,7 +2600,7 @@ function Funcs:AddLabel(Text, DoesWrap)
         return Dropdown;
     end;
 
-    function Funcs:AddDependencyBox(namer, toggler)
+    function Funcs:AddDependencyBox(namer)
         local Depbox = {
             Dependencies = {};
         };
@@ -2646,15 +2646,11 @@ function Funcs:AddLabel(Text, DoesWrap)
                 local Elem = Dependency[1];
                 local Value = Dependency[2];
 
-                if toggler and Elem.Type == 'Toggle' and Elem.Value ~= Value then
-                    Holder.Visible = false;
-                    Depbox:Resize();
-                    return;
-				else
-                    Holder.Visible = false;
-                    Depbox:Resize();
-                    return;
-                end;
+                if Elem.Type == 'Toggle' or Elem.Type == 'Dropdown' and Elem.Value ~= Value then
+                    Holder.Visible = false
+                    Depbox:Resize()
+                    return
+                end
             end;
 
             Holder.Visible = true;
