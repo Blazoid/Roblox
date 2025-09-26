@@ -2600,7 +2600,7 @@ function Funcs:AddLabel(Text, DoesWrap)
         return Dropdown;
     end;
 
-    function Funcs:AddDependencyBox()
+    function Funcs:AddDependencyBox(name)
         local Depbox = {
             Dependencies = {};
         };
@@ -2672,7 +2672,7 @@ function Funcs:AddLabel(Text, DoesWrap)
 
         setmetatable(Depbox, BaseGroupbox);
 
-        table.insert(Library.DependencyBoxes, Depbox);
+        table.insert(Library.DependencyBoxes[name], Depbox);
 
         return Depbox;
     end;
