@@ -2600,7 +2600,8 @@ function Funcs:AddLabel(Text, DoesWrap)
         return Dropdown;
     end;
 
-    function Funcs:AddDependencyBox()
+    function Funcs:AddDependencyBox(args)
+        local argss = args or "Default"
         local Depbox = {
             Dependencies = {};
         };
@@ -2618,9 +2619,18 @@ function Funcs:AddLabel(Text, DoesWrap)
         local Frame = Library:Create('Frame', {
             BackgroundTransparency = 1;
             Size = UDim2.new(1, 0, 1, 0);
+            Position = UDim2.new(0, 0, 0, 0);
             Visible = true;
             Parent = Holder;
         });
+        if argss == "Rework" then
+            Frame.Size = UDim2.new(0.82, 0, 1, 0);
+            Frame.Position = UDim2.new(0.06, 0, 0, 0);
+        else
+            Frame.Size = UDim2.new(1, 0, 1, 0);
+            Frame.Position = UDim2.new(0, 0, 0, 0);
+        end
+
 
         local Layout = Library:Create('UIListLayout', {
             FillDirection = Enum.FillDirection.Vertical;
