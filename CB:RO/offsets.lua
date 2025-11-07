@@ -116,7 +116,7 @@ local offsets = {
         {'FiveSeven_Mr. Anatomy'},        
         {'FiveSeven_Danjo'},        
         {'FiveSeven_Accelerator'},        
-        {'FiveSeven_Creator's Eye'},        
+        {"FiveSeven_Creator's Eye"},        
         {'MP7-SD_Equalizer'},        
         {'USP_Skull'},        
         {'USP_Yellowbelly'},        
